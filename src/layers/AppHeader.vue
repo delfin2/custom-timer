@@ -11,7 +11,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-header {
-  background-color: red;
-}
 </style>

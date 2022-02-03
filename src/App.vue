@@ -22,8 +22,13 @@ export default {
 
 <style lang="scss">
 .app {
+  height: 100%;
+  background-color: $base-background;
+
   &__content {
     display: flex;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

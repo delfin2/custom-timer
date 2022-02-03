@@ -12,6 +12,6 @@ export default {
 
 <style lang="scss" scoped>
 .app-sidebar {
-  background-color: green;
+  background-color: $second-background;
 }
 </style>
