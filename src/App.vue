@@ -1,8 +1,16 @@
 <template>
   <div class="app">
-    <app-header class="app__header"></app-header>
+    <app-header
+      class="app__header"
+      @toggle-sidebar="showSidebar = !showSidebar"
+    ></app-header>
+
     <div class="app__content">
-      <app-sidebar class="app__sidebar"></app-sidebar>
+      <app-sidebar
+        v-if="showSidebar"
+        class="app__sidebar"
+      ></app-sidebar>
+
       <router-view class="app__view" />
     </div>
   </div>
@@ -16,6 +24,12 @@ export default {
 
   components: {
     ...layers.components
+  },
+
+  data () {
+    return {
+      showSidebar: true
+    }
   }
 }
 </script>
