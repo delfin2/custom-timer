@@ -27,7 +27,7 @@ export default {
           },
           {
             label: 'Settings',
-            route: '/about'
+            route: '/settings'
           }
         ]
       }
