@@ -1,6 +1,6 @@
 <template>
   <div class="view-home">
-    <base-button></base-button>
+    <base-button label="Add timer"></base-button>
   </div>
 </template>
 
@@ -12,7 +12,10 @@ export default {
 
 <style lang="scss" scoped>
 .view-home {
+  width: 100%;
   padding: 10px;
-  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

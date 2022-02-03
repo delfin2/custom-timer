@@ -32,11 +32,13 @@ export default {
 .app {
   height: 100%;
   background-color: $base-background;
+  display: flex;
+  flex-direction: column;
 
   &__content {
     display: flex;
     width: 100%;
-    height: 100%;
+    flex-grow: 4;
   }
 }
 </style>
