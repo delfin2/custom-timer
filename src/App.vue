@@ -17,14 +17,8 @@
 </template>
 
 <script>
-import layers from './layers'
-
 export default {
   name: 'App',
-
-  components: {
-    ...layers.components
-  },
 
   data () {
     return {

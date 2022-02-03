@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ViewHome from '../views/ViewHome.vue'
+import ViewTimer from '../views/ViewTimer.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'ViewHome',
-    component: ViewHome
+    name: 'ViewTimer',
+    component: ViewTimer
   },
   {
     path: '/settings',

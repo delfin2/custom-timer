@@ -1,12 +1,12 @@
 <template>
   <div class="view-home">
-    View home {{test}}
+    <base-button></base-button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ViewHome',
+  name: 'ViewTimer',
 }
 </script>
 
