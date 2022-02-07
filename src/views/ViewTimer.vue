@@ -1,6 +1,9 @@
 <template>
   <div class="view-home">
-    <base-button label="Add timer"></base-button>
+    <base-button
+      label="Add timer"
+      @click="addTimer"
+    />
 
     <AppTimerCard
       v-for="(timer, idx) in timers"
@@ -12,6 +15,7 @@
 
 <script>
 import AppTimerCard from '@/components/AppTimerCard.vue'
+import {setTimer, getTimers} from '@/localStorageApi.js'
 
 export default {
   name: 'ViewTimer',
@@ -22,14 +26,14 @@ export default {
 
   data () {
     return {
-      timers: [
-        {
-          label: 'timer 1'
-        },
-        {
-          label: 'timer 2'
-        }
-      ]
+      timers: getTimers()
+    }
+  },
+
+  methods: {
+    addTimer () {
+      setTimer({label: `timer ${this.timers.length + 1}`})
+      this.timers = getTimers()
     }
   }
 }

@@ -22,5 +22,6 @@ export default {
   background-color: $second-color;
   border: none;
   cursor: pointer;
+  margin: 10px;
 }
 </style>
