@@ -27,18 +27,26 @@ export default {
 
   data () {
     return {
-      timers: getTimers()
+      timers: []
     }
+  },
+
+  mounted () {
+    this.fetchTimers()
   },
 
   methods: {
     removeTimer (idx) {
       removeTimerByIdx(idx)
-      this.timers = getTimers()
+        .then(() => this.fetchTimers())
     },
     addTimer () {
       setTimer({label: `timer ${this.timers.length + 1}`})
-      this.timers = getTimers()
+        .then(() => this.fetchTimers())
+    },
+    fetchTimers () {
+      getTimers()
+        .then(response => this.timers = response)
     }
   }
 }
