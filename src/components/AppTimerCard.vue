@@ -1,6 +1,10 @@
 <template>
   <div class="app-timer-card">
     {{label}}
+    <base-button
+      label="Remove"
+      @click="$emit('remove-timer')"
+    />
   </div>
 </template>
 
@@ -10,6 +14,10 @@ export default {
 
   props: {
     label: String
+  },
+
+  emits: {
+    'remove-timer': null
   }
 }
 </script>

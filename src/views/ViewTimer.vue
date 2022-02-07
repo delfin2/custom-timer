@@ -8,14 +8,15 @@
     <AppTimerCard
       v-for="(timer, idx) in timers"
       :key="idx"
-      :label="timer.label" 
+      :label="timer.label"
+      @remove-timer="removeTimer(idx)"
     />
   </div>
 </template>
 
 <script>
 import AppTimerCard from '@/components/AppTimerCard.vue'
-import {setTimer, getTimers} from '@/localStorageApi.js'
+import {setTimer, getTimers, removeTimerByIdx} from '@/localStorageApi.js'
 
 export default {
   name: 'ViewTimer',
@@ -31,6 +32,10 @@ export default {
   },
 
   methods: {
+    removeTimer (idx) {
+      removeTimerByIdx(idx)
+      this.timers = getTimers()
+    },
     addTimer () {
       setTimer({label: `timer ${this.timers.length + 1}`})
       this.timers = getTimers()
