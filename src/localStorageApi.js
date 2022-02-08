@@ -10,11 +10,9 @@ export const setTimer = (newTimer) => {
 }
 
 export const getTimers = () => {
-  console.log('Send timers request...')
   return new Promise(resolve => {
     setTimeout(() => {
       const timers = JSON.parse(localStorage.getItem('timers') ?? '[]')
-      console.log('Fethced!')
       resolve(timers)
     }, 5000)
   })

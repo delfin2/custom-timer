@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import {defineAsyncComponent} from 'vue'
 import AppTimerCard from '@/components/AppTimerCard.vue'
 import {setTimer, getTimers, removeTimerByIdx} from '@/localStorageApi.js'
 
@@ -32,9 +33,14 @@ export default {
     AppTimerCard
   },
 
+  emits: {
+    'toggle-popup': Object
+  },
+
   data () {
     return {
-      timers: []
+      timers: [],
+      AppNewTimerForm: () => import('@/components/AppNewTimerForm.vue')
     }
   },
 
@@ -48,8 +54,7 @@ export default {
         .then(() => this.fetchTimers())
     },
     addTimer () {
-      setTimer({label: `timer ${this.timers.length + 1}`})
-        .then(() => this.fetchTimers())
+      this.$emit('toggle-popup', this.AppNewTimerForm)
     },
     fetchTimers () {
       getTimers()
