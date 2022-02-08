@@ -5,12 +5,19 @@
       @click="addTimer"
     />
 
-    <AppTimerCard
-      v-for="(timer, idx) in timers"
-      :key="idx"
-      :label="timer.label"
-      @remove-timer="removeTimer(idx)"
-    />
+    <template v-if="timers.length">
+      <AppTimerCard
+        v-for="(timer, idx) in timers"
+        :key="idx"
+        :label="timer.label"
+        @remove-timer="removeTimer(idx)"
+      />
+
+      <base-button
+        label="Add timer"
+        @click="addTimer"
+      />
+    </template>
   </div>
 </template>
 
@@ -59,5 +66,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 }
 </style>

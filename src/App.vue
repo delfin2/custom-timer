@@ -35,10 +35,13 @@ export default {
   display: flex;
   flex-direction: column;
 
+  &__header {
+    height: 5%;
+  }
+
   &__content {
     display: flex;
-    width: 100%;
-    flex-grow: 4;
+    height: 95%;
   }
 }
 </style>
