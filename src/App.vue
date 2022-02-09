@@ -50,12 +50,10 @@ export default {
   },
 
   methods: {
-    togglePopup (lazyPopupComponent) {
-      if (lazyPopupComponent) {
-        lazyPopupComponent().then(result => {
-          this.popupComponent = result.default
-          this.showPopup = true
-        })
+    togglePopup (popupComponent) {
+      if (popupComponent) {
+        this.popupComponent = popupComponent 
+        this.showPopup = true
       } else {
         this.popupComponent = null
         this.showPopup = false

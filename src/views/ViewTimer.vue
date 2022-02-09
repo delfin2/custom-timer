@@ -24,6 +24,7 @@
 <script>
 import AppTimerCard from '@/components/AppTimerCard.vue'
 import {setTimer, getTimers, removeTimerByIdx} from '@/localStorageApi.js'
+import {defineAsyncComponent, markRaw} from 'vue'
 
 export default {
   name: 'ViewTimer',
@@ -39,8 +40,7 @@ export default {
   data () {
     return {
       timers: [],
-      // [KAV] TODO: swap lazy import with vue asyncComponent
-      AppNewTimerForm: () => import('@/components/AppNewTimerForm.vue')
+      AppNewTimerForm: markRaw(defineAsyncComponent(() => import('@/components/AppNewTimerForm.vue')))
     }
   },
 
