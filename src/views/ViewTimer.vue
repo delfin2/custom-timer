@@ -59,6 +59,9 @@ export default {
     fetchTimers () {
       getTimers()
         .then(response => this.timers = response)
+    },
+    setNewTimer (payload) {
+      setTimer(payload)
     }
   }
 }

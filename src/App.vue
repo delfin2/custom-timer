@@ -16,7 +16,10 @@
       <router-view
         class="app__view"
         @toggle-popup="togglePopup"
-      />
+        v-slot="{Component}"
+      >
+        <component ref="routerRef" :is="Component" />
+      </router-view>
     </div>
 
     <transition name="fade">
@@ -26,6 +29,7 @@
       >
         <component
           :is="popupComponent"
+          @popup-event="handlePopupEvent"
         />
       </base-popup>
     </transition>
@@ -45,8 +49,12 @@ export default {
   data () {
     return {
       showSidebar: false,
-      showPopup: false
+      showPopup: false,
     }
+  },
+
+  computed: {
+    routerRef () {return this.$refs.routerRef}
   },
 
   methods: {
@@ -58,6 +66,10 @@ export default {
         this.popupComponent = null
         this.showPopup = false
       }
+    },
+    handlePopupEvent (payload) {
+      if (payload?.type === 'newTimer') this.$refs.routerRef?.setNewTimer?.(payload.payload)
+      else console.log('handlePopupEvent:', payload)
     }
   }
 }
