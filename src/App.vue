@@ -24,7 +24,9 @@
         v-if="showPopup"
         @toggle-popup="togglePopup"
       >
-        <component :is="popupComponent" />
+        <component
+          :is="popupComponent"
+        />
       </base-popup>
     </transition>
   </div>

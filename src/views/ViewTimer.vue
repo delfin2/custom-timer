@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import {defineAsyncComponent} from 'vue'
 import AppTimerCard from '@/components/AppTimerCard.vue'
 import {setTimer, getTimers, removeTimerByIdx} from '@/localStorageApi.js'
 
@@ -40,6 +39,7 @@ export default {
   data () {
     return {
       timers: [],
+      // [KAV] TODO: swap lazy import with vue asyncComponent
       AppNewTimerForm: () => import('@/components/AppNewTimerForm.vue')
     }
   },
