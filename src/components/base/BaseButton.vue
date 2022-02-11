@@ -1,16 +1,39 @@
 <template>
-  <button class="base-button">
+  <button
+    class="base-button"
+    :class="{'base-button_transparent': type === 'transparent'}"
+    :style="buttonColor"
+  >
     {{label}}
   </button>
 </template>
 
 <script>
 export default {
+  name: 'BaseButton',
+
   props: {
-    label: String
+    label: String,
+    color: String,
+    type: String
   },
 
-  name: 'BaseButton'
+  computed: {
+    buttonColor () {
+      if (this.type === 'transparent') {
+        return {
+          color: this.color ?? 'var(--second-color)',
+          borderColor: this.color ?? 'var(--second-color)'
+        }
+      }
+      else {
+        return {
+          backgroundColor: this.color,
+          borderColor: this.color
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -18,10 +41,13 @@ export default {
 .base-button {
   font-size: 1.6rem;
   padding: 5px;
-  color: black;
   background-color: $second-color;
-  border: none;
+  border: 1px solid $second-color;
   cursor: pointer;
   margin: 10px;
+
+  &_transparent {
+    background: none;
+  }
 }
 </style>

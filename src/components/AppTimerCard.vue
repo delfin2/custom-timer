@@ -1,7 +1,16 @@
 <template>
   <div class="app-timer-card">
-    {{label}}
+    <div class="app-timer-card__title">{{name}}</div>
+    <span>Time left: {{timeLeft}}</span>
     <base-button
+      label="Start"
+    />
+    <base-button
+      type="transparent"
+      label="Stop"
+    />
+    <base-button
+      color="red"
       label="Remove"
       @click="$emit('remove-timer')"
     />
@@ -13,7 +22,8 @@ export default {
   name: 'AppTimerCard',
 
   props: {
-    label: String
+    name: String,
+    timeLeft: Number
   },
 
   emits: {
@@ -28,5 +38,11 @@ export default {
   border: 2px solid $extra-color;
   padding: 15px;
   margin: 10px;
+
+  &__title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
 }
 </style>

@@ -6,7 +6,7 @@
     />
     <base-text-input
       placeholder="Time"
-      v-model="newTimer.time"
+      v-model.number="newTimer.timeLeft"
     />
     <base-button
       label="Add"
@@ -27,7 +27,11 @@ export default {
     return {
       newTimer: {
         name: 'New Timer',
-        time: 10
+        timeLeft: 60000,
+        status: {
+          start: null,
+          end: null
+        }
       }
     }
   },

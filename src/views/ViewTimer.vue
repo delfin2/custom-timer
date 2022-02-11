@@ -9,7 +9,7 @@
       <AppTimerCard
         v-for="(timer, idx) in timers"
         :key="idx"
-        :label="timer.label"
+        v-bind="timer"
         @remove-timer="removeTimer(idx)"
       />
 
@@ -62,6 +62,8 @@ export default {
     },
     setNewTimer (payload) {
       setTimer(payload)
+      this.$emit('toggle-popup')
+      this.fetchTimers()
     }
   }
 }
