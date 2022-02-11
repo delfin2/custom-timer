@@ -1,7 +1,6 @@
 <template>
   <button
     class="base-button"
-    :class="{'base-button_transparent': type === 'transparent'}"
     :style="buttonColor"
   >
     {{label}}
@@ -23,7 +22,8 @@ export default {
       if (this.type === 'transparent') {
         return {
           color: this.color ?? 'var(--second-color)',
-          borderColor: this.color ?? 'var(--second-color)'
+          borderColor: this.color ?? 'var(--second-color)',
+          background: 'none'
         }
       }
       else {
@@ -45,9 +45,5 @@ export default {
   border: 1px solid $second-color;
   cursor: pointer;
   margin: 10px;
-
-  &_transparent {
-    background: none;
-  }
 }
 </style>
