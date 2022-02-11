@@ -4,6 +4,7 @@
     <span>Time left: {{timeLeft}}</span>
     <base-button
       label="Start"
+      @click="$emit('start-timer')"
     />
     <base-button
       type="transparent"
@@ -27,7 +28,8 @@ export default {
   },
 
   emits: {
-    'remove-timer': null
+    'remove-timer': null,
+    'start-timer': null,
   }
 }
 </script>

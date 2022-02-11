@@ -68,7 +68,7 @@ export default {
       }
     },
     handlePopupEvent (payload) {
-      if (payload?.type === 'newTimer') this.$refs.routerRef?.setNewTimer?.(payload.payload)
+      if (payload?.type === 'newTimer') this.$refs.routerRef?.createNewTimer?.(payload.payload)
       else console.log('handlePopupEvent:', payload)
     }
   }

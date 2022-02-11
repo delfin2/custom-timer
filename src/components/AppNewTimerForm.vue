@@ -28,10 +28,8 @@ export default {
       newTimer: {
         name: 'New Timer',
         timeLeft: 60000,
-        status: {
-          start: null,
-          end: null
-        }
+        started: null,
+        stoped: null
       }
     }
   },

@@ -11,6 +11,7 @@
         :key="idx"
         v-bind="timer"
         @remove-timer="removeTimer(idx)"
+        @start-timer="startTimer(idx)"
       />
 
       <base-button
@@ -23,7 +24,7 @@
 
 <script>
 import AppTimerCard from '@/components/AppTimerCard.vue'
-import {setTimer, getTimers, removeTimerByIdx} from '@/localStorageApi.js'
+import {newTimer, getTimers, removeTimerByIdx} from '@/localStorageApi.js'
 import {defineAsyncComponent, markRaw} from 'vue'
 
 export default {
@@ -51,19 +52,22 @@ export default {
   methods: {
     removeTimer (idx) {
       removeTimerByIdx(idx)
-        .then(() => this.fetchTimers())
+        .then(timers => this.timers = timers)
+    },
+    startTimer (idx) {
+      console.log('start', idx)
     },
     addTimer () {
       this.$emit('toggle-popup', this.AppNewTimerForm)
     },
     fetchTimers () {
       getTimers()
-        .then(response => this.timers = response)
+        .then(timers => this.timers = timers)
     },
-    setNewTimer (payload) {
-      setTimer(payload)
+    createNewTimer (payload) {
+      newTimer(payload)
+        .then(timers => this.timers = timers)
       this.$emit('toggle-popup')
-      this.fetchTimers()
     }
   }
 }
