@@ -9,6 +9,7 @@
     <base-button
       type="transparent"
       label="Stop"
+      @click="$emit('stop-timer')"
     />
     <base-button
       color="red"
@@ -30,6 +31,7 @@ export default {
   emits: {
     'remove-timer': null,
     'start-timer': null,
+    'stop-timer': null,
   }
 }
 </script>

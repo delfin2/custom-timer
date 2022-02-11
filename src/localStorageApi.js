@@ -29,11 +29,12 @@ export const removeTimerByIdx = (idx) => {
   })
 }
 
-export const putTimer = (idx, updFields) => {
+export const updTimerById = (idx, updFields) => {
   return new Promise(resolve => {
     setTimeout(() => {
       const timers = JSON.parse(localStorage.getItem('timers') ?? '[]')
-      timers[idx] = {...timers[idx], ...updFields}
+      let target = timers[idx]
+      timers[idx] = {...target, ...updFields}
       localStorage.setItem('timers', JSON.stringify(timers))
       resolve(timers)
     }, 1000)
