@@ -4,7 +4,7 @@
     <span>Time left: {{timer}}</span>
     <base-button
       label="Start"
-      @click="$emit('start-timer')"
+      @click="$emit('start-timer', getNow())"
     />
     <base-button
       type="transparent"
@@ -57,6 +57,12 @@ export default {
 
   beforeUnmount () {
     clearInterval(this.intervalId)
+  },
+  
+  methods: {
+    getNow () {
+      return new Date()
+    }
   }
 }
 </script>

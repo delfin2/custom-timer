@@ -11,7 +11,7 @@
         :key="idx"
         v-bind="timer"
         @remove-timer="removeTimer(idx)"
-        @start-timer="startTimer(idx)"
+        @start-timer="(startTime) => startTimer(idx, startTime)"
         @stop-timer="stopTimer(idx)"
       />
 
@@ -55,9 +55,9 @@ export default {
       removeTimerByIdx(idx)
         .then(timers => this.timers = timers)
     },
-    startTimer (idx) {
-      const now = new Date().toUTCString()
-      updTimerById(idx, {started: now, stoped: null})
+    startTimer (idx, startTime) {
+      this.timers[idx].started = startTime.toUTCString()
+      updTimerById(idx, {started: startTime.toUTCString(), stoped: null})
         .then(timers => this.timers = timers)
     },
     stopTimer (idx) {

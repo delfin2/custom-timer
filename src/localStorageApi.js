@@ -5,7 +5,7 @@ export const newTimer = (newTimer) => {
       timers.push(newTimer)
       localStorage.setItem('timers', JSON.stringify(timers))
       resolve(timers)
-    }, 1000)
+    }, 3000)
   })
 }
 
@@ -14,7 +14,7 @@ export const getTimers = () => {
     setTimeout(() => {
       const timers = JSON.parse(localStorage.getItem('timers') ?? '[]')
       resolve(timers)
-    }, 1000)
+    }, 3000)
   })
 }
 
@@ -25,7 +25,7 @@ export const removeTimerByIdx = (idx) => {
       timers.splice(idx, 1)
       localStorage.setItem('timers', JSON.stringify(timers))
       resolve(timers)
-    }, 1000)
+    }, 3000)
   })
 }
 
@@ -37,6 +37,6 @@ export const updTimerById = (idx, updFields) => {
       timers[idx] = {...target, ...updFields}
       localStorage.setItem('timers', JSON.stringify(timers))
       resolve(timers)
-    }, 1000)
+    }, 3000)
   })
 }
