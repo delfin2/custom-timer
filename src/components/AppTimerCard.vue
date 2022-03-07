@@ -1,7 +1,7 @@
 <template>
   <div class="app-timer-card">
     <div class="app-timer-card__title">{{name}}</div>
-    <span>Time left: {{timeLeft}}</span>
+    <span>Time left: {{timer}}</span>
     <base-button
       label="Start"
       @click="$emit('start-timer')"
@@ -25,13 +25,38 @@ export default {
 
   props: {
     name: String,
-    timeLeft: Number
+    timeLeft: Number,
+    started: String,
+    stoped: String
   },
 
   emits: {
     'remove-timer': null,
     'start-timer': null,
     'stop-timer': null,
+  },
+
+  data () {
+    return {
+      timer: Math.floor(this.timeLeft / 1000),
+      intervalId: null
+    }
+  },
+
+  mounted () {
+    this.intervalId = setInterval(() => {
+      if (this.started && !this.stoped) {
+        const startedTime = new Date(this.started)
+        const nowTime = new Date()
+        const passedTime = nowTime - startedTime
+        console.log('interval calc')
+        this.timer = Math.floor((this.timeLeft - passedTime) / 1000)
+      }
+    }, 1000)
+  },
+
+  beforeUnmount () {
+    clearInterval(this.intervalId)
   }
 }
 </script>

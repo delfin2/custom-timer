@@ -27,7 +27,7 @@ export default {
     return {
       newTimer: {
         name: 'New Timer',
-        timeLeft: 60000,
+        timeLeft: 60,
         started: null,
         stoped: null
       }
@@ -36,6 +36,7 @@ export default {
 
   methods: {
     addNewTimer () {
+      this.newTimer.timeLeft *= 1000
       this.$emit('popupEvent', {type: 'newTimer', payload: this.newTimer})
     }
   }

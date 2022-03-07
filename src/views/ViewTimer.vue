@@ -57,13 +57,15 @@ export default {
     },
     startTimer (idx) {
       const now = new Date().toUTCString()
-      updTimerById(idx, {started: now})
+      updTimerById(idx, {started: now, stoped: null})
         .then(timers => this.timers = timers)
-      
     },
     stopTimer (idx) {
-      const now = new Date().toUTCString()
-      updTimerById(idx, {stoped: now})
+      const target = this.timers[idx]
+      const started = new Date(target.started)
+      const now = new Date()
+      const passed = now - started
+      updTimerById(idx, {stoped: now.toUTCString(), timeLeft: target.timeLeft - passed})
         .then(timers => this.timers = timers)
     },
     addTimer () {
