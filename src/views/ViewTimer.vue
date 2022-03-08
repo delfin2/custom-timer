@@ -11,8 +11,8 @@
         :key="idx"
         v-bind="timer"
         @remove-timer="removeTimer(idx)"
-        @start-timer="(startTime) => startTimer(idx, startTime)"
-        @stop-timer="stopTimer(idx)"
+        @start-timer="(startedTime) => startTimer(idx, startedTime)"
+        @stop-timer="(stoppedTime) => stopTimer(idx, stoppedTime)"
       />
 
       <base-button
@@ -55,17 +55,20 @@ export default {
       removeTimerByIdx(idx)
         .then(timers => this.timers = timers)
     },
-    startTimer (idx, startTime) {
-      this.timers[idx].started = startTime.toUTCString()
-      updTimerById(idx, {started: startTime.toUTCString(), stoped: null})
+    startTimer (idx, startedTime) {
+      const target = this.timers[idx]
+      target.started = startedTime.toUTCString()
+      target.stopped = null
+      updTimerById(idx, {started: target.started, stopped: target.stopped})
         .then(timers => this.timers = timers)
     },
-    stopTimer (idx) {
+    stopTimer (idx, stoppedTime) {
       const target = this.timers[idx]
-      const started = new Date(target.started)
-      const now = new Date()
-      const passed = now - started
-      updTimerById(idx, {stoped: now.toUTCString(), timeLeft: target.timeLeft - passed})
+      const startedTime = new Date(target.started)
+      const passedTime = stoppedTime - startedTime
+      target.stopped = stoppedTime.toUTCString()
+      target.timeLeft = target.timeLeft - passedTime
+      updTimerById(idx, {stopped: target.stopped, timeLeft: target.timeLeft})
         .then(timers => this.timers = timers)
     },
     addTimer () {

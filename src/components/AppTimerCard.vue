@@ -3,13 +3,15 @@
     <div class="app-timer-card__title">{{name}}</div>
     <span>Time left: {{timer}}</span>
     <base-button
+      v-if="!isActive"
       label="Start"
       @click="$emit('start-timer', getNow())"
     />
     <base-button
+      v-if="isActive"
       type="transparent"
       label="Stop"
-      @click="$emit('stop-timer')"
+      @click="$emit('stop-timer', getNow())"
     />
     <base-button
       color="red"
@@ -27,41 +29,67 @@ export default {
     name: String,
     timeLeft: Number,
     started: String,
-    stoped: String
+    stopped: String
   },
 
   emits: {
     'remove-timer': null,
-    'start-timer': null,
-    'stop-timer': null,
+    'start-timer': val => val instanceof Date,
+    'stop-timer': val => val instanceof Date,
   },
 
   data () {
     return {
-      timer: Math.floor(this.timeLeft / 1000),
+      timer: null,
       intervalId: null
     }
   },
 
-  mounted () {
-    this.intervalId = setInterval(() => {
-      if (this.started && !this.stoped) {
-        const startedTime = new Date(this.started)
-        const nowTime = new Date()
-        const passedTime = nowTime - startedTime
-        console.log('interval calc')
-        this.timer = Math.floor((this.timeLeft - passedTime) / 1000)
+  computed: {
+    isActive () {
+      if (this.started && !this.stopped) return true
+      else return false
+    }
+  },
+
+  watch: {
+    isActive: {
+      immediate: true,
+      handler (newVal) {
+        if (newVal) { this.startCountdown() }
+        else { this.stopCountdown() }
       }
-    }, 1000)
+    },
+
+    timeLeft () {
+      this.timer = this.timeLeft / 1000
+    }
+  },
+
+  mounted () {
+    if (!this.isActive) this.timer = this.timeLeft / 1000
   },
 
   beforeUnmount () {
-    clearInterval(this.intervalId)
+    this.stopCountdown()
   },
   
   methods: {
-    getNow () {
-      return new Date()
+    getNow () { return new Date() },
+
+    startCountdown () {
+      this.intervalId = setInterval(() => {
+        const startedTime = new Date(this.started)
+        const nowTime = new Date()
+        const passedTime = nowTime - startedTime
+        console.log(`Interval#${this.intervalId} calc`)
+        this.timer = (this.timeLeft - passedTime) / 1000
+      }, 1000)
+    },
+    
+    stopCountdown () {
+      clearInterval(this.intervalId)
+      this.intervalId = null
     }
   }
 }
