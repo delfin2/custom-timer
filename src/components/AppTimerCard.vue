@@ -1,22 +1,33 @@
 <template>
-  <div class="app-timer-card">
+  <div
+    :tabindex="loading ? -1 : 0"
+    class="app-timer-card"
+  >
     <div class="app-timer-card__title">{{name}}</div>
     <span>Time left: {{timer}}</span>
     <base-button
+      :tabindex="loading ? -1 : 0"
       v-if="!isActive"
       label="Start"
       @click="$emit('start-timer', getNow())"
     />
     <base-button
+      :tabindex="loading ? -1 : 0"
       v-if="isActive"
       type="transparent"
       label="Stop"
       @click="$emit('stop-timer', getNow())"
     />
     <base-button
+      :tabindex="loading ? -1 : 0"
       color="red"
-      label="Remove"
+      label="x"
       @click="$emit('remove-timer')"
+    />
+
+    <base-loader
+      v-if="loading"
+      style="font-size: 5rem;"
     />
   </div>
 </template>
@@ -29,7 +40,8 @@ export default {
     name: String,
     timeLeft: Number,
     started: String,
-    stopped: String
+    stopped: String,
+    loading: Boolean
   },
 
   emits: {
@@ -60,7 +72,6 @@ export default {
         else { this.stopCountdown() }
       }
     },
-
     timeLeft () {
       this.timer = this.timeLeft / 1000
     }
@@ -76,7 +87,6 @@ export default {
   
   methods: {
     getNow () { return new Date() },
-
     startCountdown () {
       this.intervalId = setInterval(() => {
         const startedTime = new Date(this.started)
@@ -86,7 +96,6 @@ export default {
         this.timer = (this.timeLeft - passedTime) / 1000
       }, 1000)
     },
-    
     stopCountdown () {
       clearInterval(this.intervalId)
       this.intervalId = null
@@ -97,10 +106,12 @@ export default {
 
 <style lang="scss" scoped>
 .app-timer-card {
+  position: relative;
   font-size: 1.6rem;
   border: 2px solid $extra-color;
   padding: 15px;
   margin: 10px;
+  z-index: 0;
 
   &__title {
     text-align: center;

@@ -10,6 +10,7 @@
         v-for="(timer, idx) in timers"
         :key="idx"
         v-bind="timer"
+        :loading="true"
         @remove-timer="removeTimer(idx)"
         @start-timer="(startedTime) => startTimer(idx, startedTime)"
         @stop-timer="(stoppedTime) => stopTimer(idx, stoppedTime)"
