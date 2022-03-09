@@ -1,25 +1,22 @@
 <template>
-  <div
-    :tabindex="loading ? -1 : 0"
-    class="app-timer-card"
-  >
+  <div class="app-timer-card">
     <div class="app-timer-card__title">{{name}}</div>
     <span>Time left: {{timer}}</span>
     <base-button
-      :tabindex="loading ? -1 : 0"
+      :tabindex="(loading || inactive) ? -1 : 0"
       v-if="!isActive"
       label="Start"
       @click="$emit('start-timer', getNow())"
     />
     <base-button
-      :tabindex="loading ? -1 : 0"
+      :tabindex="(loading || inactive) ? -1 : 0"
       v-if="isActive"
       type="transparent"
       label="Stop"
       @click="$emit('stop-timer', getNow())"
     />
     <base-button
-      :tabindex="loading ? -1 : 0"
+      :tabindex="(loading || inactive) ? -1 : 0"
       color="red"
       label="x"
       @click="$emit('remove-timer')"
@@ -38,7 +35,8 @@ export default {
     timeLeft: Number,
     started: String,
     stopped: String,
-    loading: Boolean
+    loading: Boolean,
+    inactive: Boolean
   },
 
   emits: {

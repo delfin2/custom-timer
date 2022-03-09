@@ -1,11 +1,11 @@
 <template>
 <div class="app-header">
-  <span
+  <button
     class="material-icons app-header__sidebar-button"
     @click="$emit('toggle-sidebar')"
   >
     reorder
-  </span>
+  </button>
   <span class="app-header__title">
     Timer
   </span>
@@ -30,6 +30,7 @@ export default {
 
   &__sidebar-button {
     margin-right: 10px;
+    color: var(--base-color);
   }
 
   &__title {

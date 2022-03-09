@@ -1,14 +1,14 @@
 <template>
 <div class="app-sidebar">
   <div class="app-sidebar__list">
-    <div
+    <button
       class="app-sidebar__list__el"
       v-for="(el, idx) in mockData.elements"
       :key="idx"
       @click="$router.push(el.route)"
     >
       {{el.label}}
-    </div>
+    </button>
   </div>
 </div>
 </template>
@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 .app-sidebar {
-  background-color: $second-background;
+  background-color: var(--second-background);
   max-width: 300px;
   font-size: 1.6rem;
   padding: 5px;
@@ -46,6 +46,9 @@ export default {
   &__list {
     &__el {
       padding: 5px;
+      font-size: 1em;
+      display: block;
+      color: var(--base-color);
     }
   }
 }
