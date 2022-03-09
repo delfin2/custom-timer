@@ -22,6 +22,7 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 10;
+  font-size: 6rem;
 
   &__background {
     z-index: 11;

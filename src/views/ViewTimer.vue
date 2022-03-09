@@ -10,7 +10,7 @@
         v-for="(timer, idx) in timers"
         :key="idx"
         v-bind="timer"
-        :loading="true"
+        :loading="false"
         @remove-timer="removeTimer(idx)"
         @start-timer="(startedTime) => startTimer(idx, startedTime)"
         @stop-timer="(stoppedTime) => stopTimer(idx, stoppedTime)"
@@ -21,6 +21,8 @@
         @click="addTimer"
       />
     </template>
+
+    <base-loader v-if="loading" />
   </div>
 </template>
 
@@ -43,7 +45,8 @@ export default {
   data () {
     return {
       timers: [],
-      AppNewTimerForm: markRaw(defineAsyncComponent(() => import('@/components/AppNewTimerForm.vue')))
+      AppNewTimerForm: markRaw(defineAsyncComponent(() => import('@/components/AppNewTimerForm.vue'))),
+      loading: false
     }
   },
 
@@ -54,14 +57,14 @@ export default {
   methods: {
     removeTimer (idx) {
       removeTimerByIdx(idx)
-        .then(timers => this.timers = timers)
+        .then(() => this.timers.splice(idx, 1))
     },
     startTimer (idx, startedTime) {
       const target = this.timers[idx]
       target.started = startedTime.toUTCString()
       target.stopped = null
       updTimerById(idx, {started: target.started, stopped: target.stopped})
-        .then(timers => this.timers = timers)
+        .then(timer => this.timers.splice(idx, 1, timer))
     },
     stopTimer (idx, stoppedTime) {
       const target = this.timers[idx]
@@ -70,7 +73,7 @@ export default {
       target.stopped = stoppedTime.toUTCString()
       target.timeLeft = target.timeLeft - passedTime
       updTimerById(idx, {stopped: target.stopped, timeLeft: target.timeLeft})
-        .then(timers => this.timers = timers)
+        .then(timer => this.timers.splice(idx, 1, timer))
     },
     addTimer () {
       this.$emit('toggle-popup', this.AppNewTimerForm)
@@ -81,7 +84,7 @@ export default {
     },
     createNewTimer (payload) {
       newTimer(payload)
-        .then(timers => this.timers = timers)
+        .then(timer => this.timers.push(timer))
       this.$emit('toggle-popup')
     }
   }
@@ -96,5 +99,6 @@ export default {
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
+  position: relative;
 }
 </style>

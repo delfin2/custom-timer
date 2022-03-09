@@ -25,10 +25,7 @@
       @click="$emit('remove-timer')"
     />
 
-    <base-loader
-      v-if="loading"
-      style="font-size: 5rem;"
-    />
+    <base-loader v-if="loading" />
   </div>
 </template>
 
