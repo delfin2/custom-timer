@@ -31,7 +31,7 @@
 
 <script>
 import AppTimerCard from '@/components/AppTimerCard.vue'
-import {newTimer, getTimers, removeTimerByIdx, updTimerById} from '@/localStorageApi.js'
+import localStorage from '@/localStorageApi.js'
 import {defineAsyncComponent, markRaw} from 'vue'
 
 export default {
@@ -61,7 +61,7 @@ export default {
   methods: {
     removeTimer (idx) {
       this.loading = true
-      removeTimerByIdx(idx)
+      localStorage.removeTimerByIdx(idx)
         .then(() => this.timers.splice(idx, 1))
         .finally(() => this.loading = false)
     },
@@ -70,7 +70,7 @@ export default {
       const target = this.timers[idx]
       target.started = startedTime.toUTCString()
       target.stopped = null
-      updTimerById(idx, {started: target.started, stopped: target.stopped})
+      localStorage.updTimerById(idx, {started: target.started, stopped: target.stopped})
         .then(timer => this.timers.splice(idx, 1, timer))
         .finally(() => this.timersLoadingStat[idx] = false)
     },
@@ -81,7 +81,7 @@ export default {
       const passedTime = stoppedTime - startedTime
       target.stopped = stoppedTime.toUTCString()
       target.timeLeft = target.timeLeft - passedTime
-      updTimerById(idx, {stopped: target.stopped, timeLeft: target.timeLeft})
+      localStorage.updTimerById(idx, {stopped: target.stopped, timeLeft: target.timeLeft})
         .then(timer => this.timers.splice(idx, 1, timer))
         .finally(() => this.timersLoadingStat[idx] = false)
     },
@@ -90,13 +90,13 @@ export default {
     },
     fetchTimers () {
       this.loading = true
-      getTimers()
+      localStorage.getTimers()
         .then(timers => this.timers = timers)
         .finally(() => this.loading = false)
     },
     createNewTimer (payload) {
       this.loading = true
-      newTimer(payload)
+      localStorage.newTimer(payload)
         .then(timer => this.timers.push(timer))
         .finally(() => this.loading = false)
       this.$emit('toggle-popup')

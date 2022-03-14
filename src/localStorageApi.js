@@ -1,4 +1,4 @@
-export const newTimer = (newTimer) => {
+const newTimer = (newTimer) => {
   return new Promise(resolve => {
     setTimeout(() => {
       const timers = JSON.parse(localStorage.getItem('timers') ?? '[]')
@@ -9,7 +9,7 @@ export const newTimer = (newTimer) => {
   })
 }
 
-export const getTimers = () => {
+const getTimers = () => {
   return new Promise(resolve => {
     setTimeout(() => {
       const timers = JSON.parse(localStorage.getItem('timers') ?? '[]')
@@ -18,7 +18,7 @@ export const getTimers = () => {
   })
 }
 
-export const removeTimerByIdx = (idx) => {
+const removeTimerByIdx = (idx) => {
   return new Promise(resolve => {
     setTimeout(() => {
       const timers = JSON.parse(localStorage.getItem('timers') ?? '[]')
@@ -30,7 +30,7 @@ export const removeTimerByIdx = (idx) => {
   })
 }
 
-export const updTimerById = (idx, updFields) => {
+const updTimerById = (idx, updFields) => {
   return new Promise(resolve => {
     setTimeout(() => {
       const timers = JSON.parse(localStorage.getItem('timers') ?? '[]')
@@ -40,4 +40,11 @@ export const updTimerById = (idx, updFields) => {
       resolve(timers[idx])
     }, 3000)
   })
+}
+
+export default {
+  newTimer,
+  getTimers,
+  removeTimerByIdx,
+  updTimerById
 }
