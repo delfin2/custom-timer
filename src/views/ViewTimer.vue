@@ -32,6 +32,7 @@
 <script>
 import AppTimerCard from '@/components/AppTimerCard.vue'
 import localStorage from '@/localStorageApi.js'
+import db from '@/postgresApi.js'
 import {defineAsyncComponent, markRaw} from 'vue'
 
 export default {
@@ -61,8 +62,9 @@ export default {
   methods: {
     removeTimer (idx) {
       this.loading = true
-      localStorage.removeTimerByIdx(idx)
-        .then(() => this.timers.splice(idx, 1))
+      const id = this.timers[idx].id
+      db.removeTimerById(id)
+        .then((timers) => this.timers = timers)
         .finally(() => this.loading = false)
     },
     startTimer (idx, startedTime) {
@@ -70,7 +72,7 @@ export default {
       const target = this.timers[idx]
       target.started = startedTime.toUTCString()
       target.stopped = null
-      localStorage.updTimerById(idx, {started: target.started, stopped: target.stopped})
+      db.updTimerById(target.id, {started: target.started, stopped: target.stopped})
         .then(timer => this.timers.splice(idx, 1, timer))
         .finally(() => this.timersLoadingStat[idx] = false)
     },
@@ -81,7 +83,7 @@ export default {
       const passedTime = stoppedTime - startedTime
       target.stopped = stoppedTime.toUTCString()
       target.timeLeft = target.timeLeft - passedTime
-      localStorage.updTimerById(idx, {stopped: target.stopped, timeLeft: target.timeLeft})
+      db.updTimerById(target.id, {stopped: target.stopped, timeLeft: target.timeLeft})
         .then(timer => this.timers.splice(idx, 1, timer))
         .finally(() => this.timersLoadingStat[idx] = false)
     },
@@ -90,14 +92,14 @@ export default {
     },
     fetchTimers () {
       this.loading = true
-      localStorage.getTimers()
+      db.getTimers()
         .then(timers => this.timers = timers)
         .finally(() => this.loading = false)
     },
-    createNewTimer (payload) {
+    createNewTimer (newTimer) {
       this.loading = true
-      localStorage.newTimer(payload)
-        .then(timer => this.timers.push(timer))
+      db.newTimer(newTimer)
+        .then(timers => this.timers = timers)
         .finally(() => this.loading = false)
       this.$emit('toggle-popup')
     }
